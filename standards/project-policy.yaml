@@ -1,0 +1,141 @@
+schemaVersion: 1
+policyId: integrated-plugins
+normativeDocument: standards/ENGINEERING_STANDARD.md
+
+architecture:
+  ownershipBoundary: plugin
+  targetDeclaration: positive-only
+  unsupportedTargetRepresentation: absent
+  emptyTargetDirectories: forbidden
+  canonicalSourceCopies: forbidden
+  artifactAssemblyFromCanonicalModules: required
+  sharedHostPluginImplementation: forbidden
+
+codeQuality:
+  productionGrade: required
+  placeholderRuntimeCode: forbidden
+  deterministicPublicBehavior: required
+  structuredErrors: required
+  lifecycleAndResourceOwnership: explicit
+  machineSpecificPaths: forbidden
+  committedSecrets: forbidden
+
+naming:
+  pluginAndDirectoryStyle: lowercase-kebab-case
+  internalNamesDescribeCurrentResponsibility: required
+  phaseAndPriorityNames: forbidden
+  replacementHistoryNames: forbidden
+  forbiddenInternalExamples:
+    - v1
+    - v2
+    - v3
+    - p1
+    - p2
+    - p3
+    - phase1
+    - new
+    - old
+    - legacy
+    - temp
+    - final
+    - backup
+    - copy
+  roleTerms:
+    terms:
+      - test
+      - demo
+      - example
+      - fixture
+      - mock
+    usage: matching-isolated-role-only
+    productionArtifactInclusion: forbidden
+  externalVersionedSymbolException:
+    allowed: true
+    conditions:
+      - externally-mandated
+      - documented-at-boundary
+
+boundaryValidation:
+  unknownFields: reject
+  unknownEnums: reject
+  invalidTypes: reject
+  invalidRanges: reject
+  guessedFields: forbidden
+  aliasProbing: forbidden
+  undocumentedNormalization: forbidden
+  swallowedErrors: forbidden
+  fabricatedValues: forbidden
+  documentedDeterministicDefaults: allowed
+  unavailableValues: explicit-contract-representation
+  retriesAndRecovery: documented-bounded-observable-only
+
+changePolicy:
+  scope: minimum-coherent-change
+  driveByRefactors: forbidden
+  speculativeAbstractions: forbidden
+  futureTargetPlaceholders: forbidden
+  historicalCompatibility: forbidden
+  supersededParallelPaths: forbidden
+  supportedEnvironmentCompatibility:
+    allowed: true
+    conditions:
+      - declared-in-plugin-manifest
+      - required-by-current-contract
+      - verified
+
+modularity:
+  uncontrolledGiantFiles: forbidden
+  arbitraryLineLimit: forbidden
+  mechanicalFileSplitting: forbidden
+  splitBy:
+    - independent-reason-to-change
+    - responsibility-boundary
+    - lifecycle-or-state-ownership
+    - dependency-direction
+    - independently-testable-behavior
+  preserveCohesion: required
+  passThroughAbstractionChains: forbidden
+  vagueUtilityContainers: forbidden
+
+localDatabase:
+  repositoryOwnedDataClassification: disposable-after-confirmation
+  preserveDevelopmentDataCompatibilityCode: forbidden
+  preferExplicitResetForIncompatibleLocalSchema: true
+  destructiveActions:
+    secondConfirmationRequired: true
+    initialPolicyRequestCountsAsConfirmation: false
+    readOnlyTargetResolutionRequired: true
+    exactTargetRequired: true
+    environmentEvidenceRequired: true
+    dataLossDisclosureRequired: true
+    recoveryDisclosureRequired: true
+    broadOrUnresolvedTargets: forbidden
+  remoteStagingOrProductionDestruction: forbidden
+  consumerRuntimeMigration:
+    implicitSupport: forbidden
+    explicitProductContractRequired: true
+    testsRequired: true
+
+manifest:
+  path: plugins/<plugin-id>/plugin.yaml
+  schema: standards/plugin-manifest.schema.yaml
+  unknownFields: reject
+  declaredTargetsMustBeBuildable: true
+  declaredTargetsMustBeVerifiable: true
+
+artifacts:
+  outputRoot: dist/<target-id>/
+  generatedOutputTrackedByGit: forbidden
+  unrelatedTargetContent: forbidden
+  buildCachesAndIdeState: forbidden
+  sourceGraph: modular
+  releaseGraphMayBeSelfContained: true
+  packageIdentityAndVersionAuthority: required
+
+verification:
+  followsDependencyGraph: true
+  sourceHostAloneValidatesPackaging: false
+  finalArtifactInspection: required
+  cleanConsumerCheckForPackagingChanges: required
+  unavailableRequiredCheckMustBeReportedPending: true
+

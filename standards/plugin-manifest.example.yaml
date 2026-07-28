@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=plugin-manifest.schema.yaml
+
+schemaVersion: 1
+id: reference-reader
+displayName: Reference Reader
+version: 1.0.0
+summary: Reference manifest showing a sparse, positive-only target declaration.
+
+contract:
+  version: 1
+  schema: contract/reader.schema.json
+
+provenance:
+  repository: https://git.example.invalid/archived-native-plugins.git
+  commit: 0123456789abcdef0123456789abcdef01234567
+  paths:
+    - Android/ReferenceReader
+    - Ios/ReferenceReader
+    - UniappNativePlugins/ReferenceReader
+
+targets:
+  - id: native-android
+    kind: native
+    platform: android
+    sourceRoot: native/android
+    capabilities:
+      - read
+      - cancel
+    build:
+      command: ./scripts/package-native-android.sh
+    verify:
+      commands:
+        - ./scripts/verify-native-android.sh
+    artifacts:
+      - id: aar
+        format: aar
+        output: dist/native-android/reference-reader-1.0.0.aar
+        distribution:
+          channel: maven
+          packageId: com.example.reference:reference-reader
+    constraints:
+      - name: minimum-sdk
+        value: 23
+
+  - id: native-ios
+    kind: native
+    platform: ios
+    sourceRoot: native/ios
+    capabilities:
+      - read
+      - cancel
+    build:
+      command: ./scripts/package-native-ios.sh
+    verify:
+      commands:
+        - ./scripts/verify-native-ios.sh
+    artifacts:
+      - id: xcframework
+        format: xcframework-zip
+        output: dist/native-ios/ReferenceReader-1.0.0.xcframework.zip
+        distribution:
+          channel: swift-package
+          packageId: ReferenceReader
+    constraints:
+      - name: minimum-ios
+        value: '15.0'
+
+  - id: uniapp
+    kind: adapter
+    runtime: uniapp
+    platforms:
+      - android
+      - ios
+    sourceRoot: adapters/uniapp
+    capabilities:
+      - read
+      - cancel
+    build:
+      command: ./scripts/package-uniapp.sh
+    verify:
+      commands:
+        - ./scripts/verify-uniapp.sh
+    artifacts:
+      - id: native-plugin
+        format: native-plugin-zip
+        output: dist/uniapp/reference-reader-uniapp-1.0.0.zip
+        distribution:
+          channel: uniapp-marketplace
+          packageId: ExampleUniPlugin-ReferenceReader

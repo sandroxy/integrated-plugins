@@ -1,0 +1,46 @@
+# Operating systems and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+*.swp
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+local.properties
+*.jks
+*.keystore
+*.p12
+*.mobileprovision
+
+# Android and Gradle
+.gradle/
+**/build/
+**/.cxx/
+**/.externalNativeBuild/
+**/captures/
+
+# Apple platforms
+DerivedData/
+**/DerivedData/
+**/xcuserdata/
+**/*.xcuserstate
+**/.swiftpm/
+**/.build/
+**/Pods/
+
+# JavaScript
+**/node_modules/
+**/coverage/
+**/*.tgz
+
+# HarmonyOS
+**/.hvigor/
+**/oh_modules/
+
+# Generated release output
+**/dist/
+
