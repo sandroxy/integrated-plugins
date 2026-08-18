@@ -10,6 +10,28 @@ architecture:
   canonicalSourceCopies: forbidden
   artifactAssemblyFromCanonicalModules: required
   sharedHostPluginImplementation: forbidden
+  sharedHostSourceIntegration: forbidden
+  sharedHostArtifactConsumption: required
+  downstreamBusinessRepositoryRole: published-artifact-smoke-only
+
+testHosts:
+  roots:
+    - android-plugins-test
+    - ios-plugins-test
+    - harmonyos-plugins-test
+    - react-native-plugins-test
+    - uniapp-plugins-test
+    - web-plugins-test
+  ownership: consumer-only
+  productionBusinessLogic: forbidden
+  artifactByHost:
+    android-plugins-test: aar
+    ios-plugins-test: xcframework
+    harmonyos-plugins-test: har
+    react-native-plugins-test: npm-tarball
+    uniapp-plugins-test: uniapp-native-plugin
+    web-plugins-test: npm-tarball
+  publishExactVerifiedArtifact: required
 
 codeQuality:
   productionGrade: required
@@ -22,6 +44,8 @@ codeQuality:
 
 naming:
   pluginAndDirectoryStyle: lowercase-kebab-case
+  nativeReverseDomainPrefix: com.sandrox
+  sharedHostReverseDomainPrefix: com.sandrox.integratedplugins
   internalNamesDescribeCurrentResponsibility: required
   phaseAndPriorityNames: forbidden
   replacementHistoryNames: forbidden
@@ -138,4 +162,3 @@ verification:
   finalArtifactInspection: required
   cleanConsumerCheckForPackagingChanges: required
   unavailableRequiredCheckMustBeReportedPending: true
-

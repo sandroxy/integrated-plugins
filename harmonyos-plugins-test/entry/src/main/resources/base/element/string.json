@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "Shared HarmonyOS packaged-plugin test host"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "Integrated Plugins"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "Integrated Plugins"
+    }
+  ]
+}

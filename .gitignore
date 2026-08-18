@@ -14,6 +14,9 @@ local.properties
 *.jks
 *.keystore
 *.p12
+*.p7b
+*.pfx
+*.cer
 *.mobileprovision
 
 # Android and Gradle
@@ -31,16 +34,29 @@ DerivedData/
 **/.swiftpm/
 **/.build/
 **/Pods/
+**/.xcode.env.local
 
 # JavaScript
 **/node_modules/
 **/coverage/
 **/*.tgz
+**/.expo/
+**/.vite/
+**/.parcel-cache/
+npm-debug.log*
+pnpm-debug.log*
 
 # HarmonyOS
 **/.hvigor/
 **/oh_modules/
+**/.arkui-x/
+
+# UniApp and HBuilderX
+**/unpackage/
+**/.hbuilderx/
+
+# Local artifact staging in shared test hosts
+**/.artifacts/
 
 # Generated release output
 **/dist/
-

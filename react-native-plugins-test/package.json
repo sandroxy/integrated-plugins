@@ -1,0 +1,26 @@
+{
+  "name": "@sandrox/react-native-plugins-test",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@9.12.3",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start --dev-client",
+    "prebuild": "expo prebuild --clean",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "expo": "~54.0.31",
+    "expo-dev-client": "~6.0.20",
+    "expo-image": "~3.0.11",
+    "react": "19.1.0",
+    "react-native": "0.81.5"
+  },
+  "devDependencies": {
+    "@types/react": "~19.1.17",
+    "babel-preset-expo": "54.0.10",
+    "typescript": "~5.9.3"
+  }
+}

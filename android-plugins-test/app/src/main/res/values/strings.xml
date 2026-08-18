@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Integrated Plugins</string>
+    <string name="host_title">Integrated Plugins</string>
+    <string name="host_empty_state">No packaged plugins installed</string>
+</resources>

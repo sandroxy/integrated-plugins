@@ -18,13 +18,17 @@
 
 ```text
 integrated-plugins/
-├── android-plugins-test/    # Android 原生插件共享测试工程
-├── ios-plugins-test/        # iOS 原生插件共享测试工程
-├── plugins/                 # 插件唯一事实来源
-└── standards/               # 仓库级硬标准和机器规则
+├── android-plugins-test/       # Android 原生产物共享测试工程
+├── ios-plugins-test/           # iOS 原生产物共享测试工程
+├── harmonyos-plugins-test/     # HarmonyOS 原生产物共享测试工程
+├── react-native-plugins-test/  # React Native npm 产物共享测试工程
+├── uniapp-plugins-test/        # UniApp 原生插件产物共享测试工程
+├── web-plugins-test/           # 浏览器 npm 产物共享测试工程
+├── plugins/                    # 插件唯一事实来源
+└── standards/                  # 仓库级硬标准和机器规则
 ```
 
-三个产品工作区是两个原生测试工程和 `plugins/`。`standards/` 只保存对整个仓库生效的治理规则，不属于产品工程。
+六个共享测试工程和 `plugins/` 是相互独立的产品工作区。`standards/` 只保存对整个仓库生效的治理规则，不属于产品工程。
 
 单个插件按需采用以下结构：
 
@@ -35,6 +39,7 @@ plugins/<plugin-id>/
 ├── contract/
 ├── native/<platform>/
 ├── adapters/<runtime>/
+├── web/
 ├── packaging/<target>/
 ├── scripts/
 ├── tests/
@@ -45,7 +50,11 @@ plugins/<plugin-id>/
 
 插件的机器事实统一写入 `plugin.yaml`。只有无法由清单、Schema 或代码契约准确表达的稳定接入说明，才新增插件 Markdown 文档。
 
-两个原生测试工程只消费插件公开接口，提供中性的能力验证和原始诊断结果，不承载插件实现或业务逻辑。源码接入验证不能替代最终产物验证。
+共享测试工程只消费插件公开接口和已生成的最终产物，提供中性的能力验证与原始诊断结果，不承载插件实现或正式业务逻辑。Android 使用 AAR、iOS 使用 XCFramework、HarmonyOS 使用 HAR、React Native 与 Web 使用 npm tarball、UniApp 使用待发布的原生插件包。测试通过后发布同一份产物，禁止验收后重新构建再发布。
+
+真实业务仓库不是插件的开发宿主。插件在共享测试工程完成验证并发布后，真实项目只安装已发布版本进行接入冒烟；真实项目发现的问题必须先在对应共享测试工程复现，再回到插件源码修复。
+
+本仓库自研插件的反向域名标识使用 `com.sandrox.<plugin>`。例如 Levixel 使用 `com.sandrox.levixel`。共享测试应用使用 `com.sandrox.integratedplugins.<host>`，避免与插件和其他测试应用冲突。
 
 ## 规则来源
 
