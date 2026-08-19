@@ -6,5 +6,6 @@
   "author": "SandroX",
   "license": "",
   "dependencies": {
+    "@sandrox/levixel": "file:../.artifacts/levixel.har"
   }
 }

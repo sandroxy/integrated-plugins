@@ -50,6 +50,7 @@ pnpm-debug.log*
 **/.hvigor/
 **/oh_modules/
 **/.arkui-x/
+**/BuildProfile.ets
 
 # UniApp and HBuilderX
 **/unpackage/

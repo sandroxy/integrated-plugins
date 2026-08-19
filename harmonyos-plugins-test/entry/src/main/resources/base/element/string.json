@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "Integrated Plugins"
+    },
+    {
+      "name": "permission_internet_reason",
+      "value": "Load Levixel test media"
     }
   ]
 }

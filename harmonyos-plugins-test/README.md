@@ -4,12 +4,10 @@ Shared HarmonyOS consumer used to validate packaged plugin HAR files. The app mu
 
 ## Build
 
-Point `DEVECO_SDK_HOME` at DevEco Studio's SDK root, put its `hvigorw` directory on `PATH`, then run:
+From the repository root, package Levixel and verify the exact release HAR in this host:
 
 ```sh
-export DEVECO_SDK_HOME="/path/to/DevEco-Studio.app/Contents/sdk"
-export PATH="/path/to/DevEco-Studio.app/Contents/tools/hvigor/bin:$PATH"
-hvigorw assembleHap --mode module -p product=default
+./plugins/levixel/scripts/verify-native-harmonyos.sh
 ```
 
-Plugin-specific test pages are added only when their final HAR artifacts are available.
+The command copies `levixel-<version>.har` into the ignored `.artifacts/` directory, installs that packaged dependency with `ohpm`, and builds the host HAP. Open this directory in DevEco Studio afterward to run the same artifact on an emulator or signed device.
