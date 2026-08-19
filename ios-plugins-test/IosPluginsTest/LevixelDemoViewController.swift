@@ -3,14 +3,31 @@ import Levixel
 
 final class LevixelDemoViewController: UIViewController {
     private enum DemoAsset {
-        case image(URL)
-        case video(url: URL, poster: URL)
+        case image(source: URL, thumbnail: URL)
+        case video(source: URL, poster: URL)
+
+        var mediaItem: LevixelMediaItem {
+            switch self {
+            case .image(let source, let thumbnail):
+                return .imageURL(source, thumbnailURL: thumbnail, placeholder: nil)
+            case .video(let source, let poster):
+                return .video(url: source, poster: poster)
+            }
+        }
+
+        var thumbnailURL: URL {
+            switch self {
+            case .image(_, let thumbnail):
+                return thumbnail
+            case .video(_, let poster):
+                return poster
+            }
+        }
     }
 
     private let scrollView = UIScrollView()
     private let contentStack = UIStackView()
     private var galleryDatasource: LevixelDataSource?
-    private var videoDatasource: LevixelDataSource?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,67 +38,89 @@ final class LevixelDemoViewController: UIViewController {
         setupLayout()
 
         let galleryAssets: [DemoAsset] = [
-            .image(URL(string: "https://www.runoob.com/wp-content/uploads/2016/04/trolltunga.jpg")!),
-            .image(URL(string: "https://static.jyshare.com/images/runoob-logo.png")!),
-            .image(URL(string: "https://www.runoob.com/wp-content/uploads/2013/11/img_logo.gif")!),
-            .image(URL(string: "https://www.runoob.com/wp-content/themes/w3cschool.cc/assets/img/logo-domain-green2.png")!),
-            .image(URL(string: "https://www.w3school.com.cn/i/eg_tulip.jpg")!),
-            .image(URL(string: "https://www.w3school.com.cn/i/eg_cute.gif")!),
-            .image(URL(string: "https://www.runoob.com/wp-content/uploads/2016/04/trolltunga.jpg?v=2")!),
-            .image(URL(string: "https://www.runoob.com/wp-content/uploads/2016/04/trolltunga.jpg?v=3")!),
-            .video(
-                url: URL(string: "https://www.runoob.com/try/demo_source/movie.mp4")!,
-                poster: URL(string: "https://www.runoob.com/wp-content/uploads/2016/04/trolltunga.jpg")!
+            .image(
+                source: URL(string: "https://picsum.photos/id/1025/1600/2400")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1025/400/600")!
             ),
             .video(
-                url: URL(string: "https://www.w3school.com.cn/example/html5/mov_bbb.mp4")!,
-                poster: URL(string: "https://static.jyshare.com/images/runoob-logo.png")!
+                source: URL(string: "https://storage.googleapis.com/exoplayer-test-media-0/BigBuckBunny_320x180.mp4")!,
+                poster: URL(string: "https://picsum.photos/id/1024/800/450")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1035/1600/2400")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1035/400/600")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1050/2400/1600")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1050/600/400")!
+            ),
+            .video(
+                source: URL(string: "https://media.w3.org/2010/05/bunny/trailer.mp4")!,
+                poster: URL(string: "https://picsum.photos/id/1044/800/450")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1015/1600/2400")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1015/400/600")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1018/2400/1600")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1018/600/400")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1003/1600/2400")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1003/400/600")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1011/2400/1600")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1011/600/400")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1027/1600/2400")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1027/400/600")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1002/2400/1600")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1002/600/400")!
+            ),
+            .video(
+                source: URL(string: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4")!,
+                poster: URL(string: "https://picsum.photos/id/1069/800/450")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1043/1600/2400")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1043/400/600")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1049/2400/1600")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1049/600/400")!
+            ),
+            .video(
+                source: URL(string: "https://media.w3.org/2010/05/sintel/trailer.mp4")!,
+                poster: URL(string: "https://picsum.photos/id/1070/800/450")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1060/1600/2400")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1060/400/600")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1074/2400/1600")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1074/600/400")!
+            ),
+            .image(
+                source: URL(string: "https://picsum.photos/id/1084/1600/2400")!,
+                thumbnail: URL(string: "https://picsum.photos/id/1084/400/600")!
             )
         ]
 
-        let galleryItems = galleryAssets.map { asset -> LevixelMediaItem in
-            switch asset {
-            case .image(let url):
-                return .imageURL(url, placeholder: nil)
-            case .video(let url, let poster):
-                return .video(url: url, poster: poster)
-            }
-        }
+        let galleryItems = galleryAssets.map(\.mediaItem)
 
         let mainDatasource = LevixelArrayDataSource(items: galleryItems)
         galleryDatasource = mainDatasource
         addSection(
-            title: "图库混合场景（8图+2视频）",
+            title: "Mixed gallery (14 images + 4 videos)",
             assets: galleryAssets,
             datasource: mainDatasource,
-            galleryIdPrefix: "ios-mix"
-        )
-
-        let videoAssets: [DemoAsset] = [
-            .video(
-                url: URL(string: "https://www.runoob.com/try/demo_source/movie.mp4")!,
-                poster: URL(string: "https://www.runoob.com/wp-content/uploads/2016/04/trolltunga.jpg")!
-            ),
-            .video(
-                url: URL(string: "https://www.w3school.com.cn/example/html5/mov_bbb.mp4")!,
-                poster: URL(string: "https://static.jyshare.com/images/runoob-logo.png")!
-            )
-        ]
-        let videoItems = videoAssets.map { asset -> LevixelMediaItem in
-            switch asset {
-            case .video(let url, let poster):
-                return .video(url: url, poster: poster)
-            case .image(let url):
-                return .imageURL(url, placeholder: nil)
-            }
-        }
-        let onlyVideoDatasource = LevixelArrayDataSource(items: videoItems)
-        videoDatasource = onlyVideoDatasource
-        addSection(
-            title: "视频场景（2视频）",
-            assets: videoAssets,
-            datasource: onlyVideoDatasource,
-            galleryIdPrefix: "ios-video"
+            galleryIdPrefix: "native-shared"
         )
     }
 
@@ -123,7 +162,7 @@ final class LevixelDemoViewController: UIViewController {
 
         var currentRow = rowStack
         for (index, asset) in assets.enumerated() {
-            if index > 0 && index % 3 == 0 {
+            if index > 0 && index % 2 == 0 {
                 currentRow = UIStackView()
                 currentRow.axis = .horizontal
                 currentRow.spacing = 12
@@ -151,11 +190,9 @@ final class LevixelDemoViewController: UIViewController {
         thumb.clipsToBounds = true
         thumb.layer.cornerRadius = 10
 
-        switch asset {
-        case .image(let url):
-            loadImage(url: url, into: thumb)
-        case .video(_, let poster):
-            loadImage(url: poster, into: thumb)
+        loadImage(url: asset.thumbnailURL, into: thumb)
+
+        if case .video = asset {
             let badge = UILabel()
             badge.translatesAutoresizingMaskIntoConstraints = false
             badge.text = "VIDEO"
