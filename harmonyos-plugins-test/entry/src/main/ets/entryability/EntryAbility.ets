@@ -24,11 +24,11 @@ export default class EntryAbility extends UIAbility {
       await mainWindow.setWindowSystemBarEnable(['status', 'navigation']);
       await mainWindow.setWindowSystemBarProperties({
         statusBarColor: '#00000000',
-        navigationBarColor: '#00000000',
-        isStatusBarLightIcon: false,
-        isNavigationBarLightIcon: false,
-        statusBarContentColor: '#111827',
-        navigationBarContentColor: '#111827'
+        navigationBarColor: '#000000',
+        isStatusBarLightIcon: true,
+        isNavigationBarLightIcon: true,
+        statusBarContentColor: '#FFFFFF',
+        navigationBarContentColor: '#FFFFFF'
       });
     } catch (error) {
       const businessError: BusinessError = error as BusinessError;

@@ -13,7 +13,9 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         let window = UIWindow(windowScene: windowScene)
         let rootViewController = PluginListViewController()
-        window.rootViewController = UINavigationController(rootViewController: rootViewController)
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.navigationBar.prefersLargeTitles = true
+        window.rootViewController = navigationController
         self.window = window
         window.makeKeyAndVisible()
     }

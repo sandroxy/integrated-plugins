@@ -11,40 +11,45 @@ const TAG: string = 'LevixelDemo';
 @Component
 struct LevixelDemo {
   private readonly items: LevixelMediaItem[] = createLevixelSampleData();
+  @State statusBarInset: number = 48;
 
   aboutToAppear(): void {
-    this.setSystemBarContent(true);
-  }
-
-  aboutToDisappear(): void {
-    this.setSystemBarContent(false);
+    this.refreshStatusBarInset();
   }
 
   build() {
     Stack({ alignContent: Alignment.TopStart }) {
-      LevixelGallery({ items: this.items })
+      LevixelGallery({
+        items: this.items,
+        showsNavigationHeader: true,
+        navigationTitle: 'Levixel',
+        navigationTopInset: this.statusBarInset,
+        onNavigateBack: (): void => {
+          this.getUIContext().getRouter().back();
+        }
+      })
     }
     .width('100%')
     .height('100%')
+    .backgroundColor(Color.Black)
   }
 
-  private async setSystemBarContent(light: boolean): Promise<void> {
+  private async refreshStatusBarInset(): Promise<void> {
     const hostContext: Context | undefined = this.getUIContext().getHostContext();
     if (hostContext === undefined) {
       return;
     }
     try {
       const mainWindow: window.Window = await window.getLastWindow(hostContext);
-      const contentColor: string = light ? '#FFFFFF' : '#111827';
-      await mainWindow.setWindowSystemBarProperties({
-        isStatusBarLightIcon: light,
-        isNavigationBarLightIcon: light,
-        statusBarContentColor: contentColor,
-        navigationBarContentColor: contentColor
-      });
+      const systemArea: window.AvoidArea =
+        mainWindow.getWindowAvoidAreaIgnoringVisibility(window.AvoidAreaType.TYPE_SYSTEM);
+      const resolvedInset: number = this.getUIContext().px2vp(systemArea.topRect.height);
+      if (resolvedInset > 0) {
+        this.statusBarInset = resolvedInset;
+      }
     } catch (error) {
       const businessError: BusinessError = error as BusinessError;
-      hilog.error(DOMAIN, TAG, 'Failed to update system bars. Code: %{public}d, message: %{public}s',
+      hilog.error(DOMAIN, TAG, 'Failed to read the status bar inset. Code: %{public}d, message: %{public}s',
         businessError.code, businessError.message);
     }
   }

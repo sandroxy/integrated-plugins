@@ -7,4 +7,5 @@
     <string name="plugin_list_section_description">Open a plugin to verify its public artifact.</string>
     <string name="levixel_entry_title">Levixel</string>
     <string name="levixel_entry_description">Shared-transition image and video viewer</string>
+    <string name="navigate_back">Navigate back</string>
 </resources>

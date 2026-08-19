@@ -14,7 +14,8 @@ final class LevixelDemoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Levixel Demo"
+        title = "Levixel"
+        navigationItem.largeTitleDisplayMode = .never
         view.backgroundColor = .systemBackground
 
         setupLayout()
