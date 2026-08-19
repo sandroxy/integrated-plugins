@@ -16,5 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LevixelDemoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.IntegratedPluginsTest.Levixel" />
     </application>
 </manifest>

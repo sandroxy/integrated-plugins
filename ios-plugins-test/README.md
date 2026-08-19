@@ -4,14 +4,10 @@ Shared iOS consumer used to validate packaged plugin XCFramework files. The app 
 
 ## Build
 
+From the repository root, package Levixel and verify the exact release ZIP in this host:
+
 ```sh
-xcodebuild \
-  -project IosPluginsTest.xcodeproj \
-  -scheme IosPluginsTest \
-  -sdk iphonesimulator \
-  -destination 'generic/platform=iOS Simulator' \
-  CODE_SIGNING_ALLOWED=NO \
-  build
+./plugins/levixel/scripts/verify-native-ios.sh
 ```
 
-Plugin-specific test screens are added only when their final XCFramework artifacts are available.
+The command extracts `levixel-<version>.xcframework.zip` into the ignored `.artifacts/` directory before building. Open `IosPluginsTest.xcodeproj` afterward to run the same artifact on a signed device.

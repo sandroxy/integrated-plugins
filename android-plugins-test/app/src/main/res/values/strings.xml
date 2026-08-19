@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Integrated Plugins</string>
-    <string name="host_title">Integrated Plugins</string>
-    <string name="host_empty_state">No packaged plugins installed</string>
+    <string name="plugin_lab_label">NATIVE PLUGIN LAB</string>
+    <string name="plugin_list_title">Android Native Plugins</string>
+    <string name="plugin_list_description">Packaged plugin artifacts, isolated in focused verification screens.</string>
+    <string name="plugin_list_section_title">Available plugins</string>
+    <string name="plugin_list_section_description">Open a plugin to verify its public artifact.</string>
+    <string name="levixel_entry_title">Levixel</string>
+    <string name="levixel_entry_description">Shared-transition image and video viewer</string>
 </resources>
