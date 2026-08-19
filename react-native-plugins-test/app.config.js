@@ -10,6 +10,9 @@ module.exports = {
     ios: {
       supportsTablet: true,
       bundleIdentifier: 'com.sandrox.integratedplugins.reactnativetest',
+      infoPlist: {
+        UIViewControllerBasedStatusBarAppearance: true,
+      },
     },
     android: {
       package: 'com.sandrox.integratedplugins.reactnativetest',
