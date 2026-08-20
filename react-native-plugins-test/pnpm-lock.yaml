@@ -841,7 +841,7 @@ packages:
     resolution: {integrity: sha512-GI7eJm8/KsZUQaYcXvEExikKurRZRgEsSzyZ7faENfi65yqJBCXjDMwyN1pF6pNW1MoLH1ErDwDivFxY6BzD3w==}
 
   '@sandrox/levixel@file:../plugins/levixel/dist/react-native/sandrox-levixel-1.0.0.tgz':
-    resolution: {integrity: sha512-q5KwH7JfH2wrE3oa7dxvOP4bI6tBABwVsSaV19k1kgzKDMK1/o3T9R0dyhVAGnjK3OxTiRuMXi+4l6ya7a2leg==, tarball: file:../plugins/levixel/dist/react-native/sandrox-levixel-1.0.0.tgz}
+    resolution: {integrity: sha512-YUd9JbYZ4m1EYpTCD/YWr75SzglTZYuYeVMSzqYB2u5ff4gnVD0dFt6LSnti4wqc3eo8+1jITTaYPoKKjRwASQ==, tarball: file:../plugins/levixel/dist/react-native/sandrox-levixel-1.0.0.tgz}
     version: 1.0.0
     peerDependencies:
       expo: '>=54.0.0'
