@@ -54,7 +54,7 @@ plugins/<plugin-id>/
 
 真实业务仓库不是插件的开发宿主。插件在共享测试工程完成验证并发布后，真实项目只安装已发布版本进行接入冒烟；真实项目发现的问题必须先在对应共享测试工程复现，再回到插件源码修复。
 
-本仓库自研插件的反向域名标识使用 `com.sandrox.<plugin>`。例如 Levixel 使用 `com.sandrox.levixel`。共享测试应用使用 `com.sandrox.integratedplugins.<host>`，避免与插件和其他测试应用冲突。
+本仓库自研插件的运行时反向域名标识使用 `com.sandrox.<plugin>`。例如 Levixel 使用 `com.sandrox.levixel`。共享测试应用使用 `com.sandrox.integratedplugins.<host>`，避免与插件和其他测试应用冲突。生态分发坐标独立使用对应平台注册并验证的命名空间，例如 Android Maven 坐标使用 `io.gitee.sandrox`。
 
 ## 规则来源
 
