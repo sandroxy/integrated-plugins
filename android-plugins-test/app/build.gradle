@@ -2,12 +2,7 @@ plugins {
     id "com.android.application"
 }
 
-def levixelArtifact = file("../.artifacts/levixel.aar")
-if (!levixelArtifact.exists()) {
-    throw new GradleException(
-            "Levixel AAR not found. Run plugins/levixel/scripts/verify-native-android.sh first."
-    )
-}
+def levixelVersion = providers.gradleProperty("levixelVersion").getOrElse("1.0.0")
 
 base {
     archivesName = "android-plugins-test"
@@ -45,11 +40,7 @@ dependencies {
     implementation "androidx.activity:activity:1.11.0"
     implementation "androidx.appcompat:appcompat:1.7.1"
     implementation "androidx.recyclerview:recyclerview:1.4.0"
-    implementation "androidx.viewpager2:viewpager2:1.1.0"
-    implementation "androidx.media3:media3-exoplayer:1.5.1"
-    implementation "androidx.media3:media3-ui:1.5.1"
     implementation "com.google.android.material:material:1.13.0"
     implementation "com.github.bumptech.glide:glide:4.16.0"
-    implementation "com.github.chrisbanes:PhotoView:2.3.0"
-    implementation files(levixelArtifact)
+    implementation "com.sandrox:levixel:${levixelVersion}"
 }
