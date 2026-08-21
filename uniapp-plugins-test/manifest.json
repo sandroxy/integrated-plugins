@@ -1,6 +1,6 @@
 {
     "name" : "Integrated Plugins",
-    "appid" : "__UNI__82E039A",
+    "appid" : "__UNI__A92914D",
     "description" : "Shared UniApp packaged-plugin test host.",
     "versionName" : "1.0.0",
     "versionCode" : 100,
@@ -18,7 +18,22 @@
         "compatible" : {
             "ignoreVersion" : false
         },
-        "nativePlugins" : {},
+        "nativePlugins" : {
+            "SandroxUniPlugin-Levixel" : {
+                "__plugin_info__" : {
+                    "name" : "Levixel shared-transition viewer",
+                    "description" : "Shared-transition image and video viewer bridge for UniApp on Android and iOS.",
+                    "platforms" : "Android,iOS",
+                    "url" : "",
+                    "android_package_name" : "",
+                    "ios_bundle_id" : "",
+                    "isCloud" : false,
+                    "bought" : -1,
+                    "pid" : "",
+                    "parameters" : {}
+                }
+            }
+        },
         "distribute" : {
             "android" : {
                 "minSdkVersion" : 23,

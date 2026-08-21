@@ -6,6 +6,14 @@
         "navigationStyle": "custom",
         "navigationBarTitleText": "Integrated Plugins"
       }
+    },
+    {
+      "path": "pages/levixel/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "Levixel",
+        "disableScroll": false
+      }
     }
   ],
   "globalStyle": {
