@@ -17,17 +17,20 @@
         :class="{ portrait: item.height > item.width && item.type === 'image' }"
       >
         <image
-          v-if="!failedItems[item.id]"
+          v-if="preparedPreviewSources[item.id]"
           class="levixel-source media-image"
-          :src="previewUrl(item)"
+          :src="preparedPreviewSources[item.id]"
           mode="aspectFill"
-          @click="openViewer(index)"
+          @click="openViewer(item, index)"
           @load="handleLoad(item, $event)"
           @error="handleError(item)"
         />
-        <view v-else class="levixel-source retry-surface" @click="retry(item)">
+        <view v-else-if="failedItems[item.id]" class="levixel-source retry-surface" @click="retry(item)">
           <view class="retry-icon" />
           <text class="retry-label">Retry</text>
+        </view>
+        <view v-else class="levixel-source preview-placeholder">
+          <view class="preview-spinner" />
         </view>
         <view v-if="item.type === 'video'" class="video-badge">
           <view class="play-icon" />
@@ -43,17 +46,20 @@
 import {
   onLevixelEvent,
   openLevixelFromSelector,
+  prepareLevixelItem,
   warmupLevixelItem,
 } from '@/nativeplugins/SandroxUniPlugin-Levixel/js_sdk/index.js'
-import { levixelMedia, levixelPreviewUrl } from '@/data/levixelMedia.js'
+import { levixelMedia } from '@/data/levixelMedia.js'
 
 export default {
   name: 'LevixelPage',
   data() {
     return {
       media: levixelMedia,
+      preparedPreviewSources: {},
+      readyItems: {},
       failedItems: {},
-      revisions: {},
+      previewPreparationGeneration: 0,
       lastEventType: '',
       removeEventListener: null,
     }
@@ -63,8 +69,11 @@ export default {
       if (event && typeof event.type === 'string')
         this.lastEventType = event.type
     })
+    this.previewPreparationGeneration += 1
+    this.prepareAllPreviews(this.previewPreparationGeneration)
   },
   onUnload() {
+    this.previewPreparationGeneration += 1
     if (this.removeEventListener)
       this.removeEventListener()
     this.removeEventListener = null
@@ -79,32 +88,66 @@ export default {
         .map(part => part.charAt(0).toUpperCase() + part.slice(1))
         .join(' ')
     },
-    previewUrl(item) {
-      const baseUrl = levixelPreviewUrl(item)
-      const revision = this.revisions[item.id]
-      if (!revision)
-        return baseUrl
-      const separator = baseUrl.includes('?') ? '&' : '?'
-      return `${baseUrl}${separator}retry=${revision}`
+    async prepareAllPreviews(generation) {
+      let nextIndex = 0
+      const worker = async () => {
+        while (generation === this.previewPreparationGeneration) {
+          const index = nextIndex
+          nextIndex += 1
+          if (index >= this.media.length)
+            return
+          await this.preparePreview(this.media[index], generation)
+        }
+      }
+      const workerCount = Math.min(3, this.media.length)
+      await Promise.all(Array.from({ length: workerCount }, () => worker()))
+    },
+    async preparePreview(item, generation = this.previewPreparationGeneration) {
+      try {
+        const prepared = await prepareLevixelItem(item, { priority: true })
+        if (generation !== this.previewPreparationGeneration)
+          return
+        if (!prepared || !prepared.src) {
+          this.handleError(item)
+          return
+        }
+        this.preparedPreviewSources = {
+          ...this.preparedPreviewSources,
+          [item.id]: prepared.src,
+        }
+      }
+      catch (_) {
+        if (generation === this.previewPreparationGeneration)
+          this.handleError(item)
+      }
     },
     handleLoad(item, event) {
+      this.readyItems = { ...this.readyItems, [item.id]: true }
       if (this.failedItems[item.id]) {
         const nextFailedItems = { ...this.failedItems }
         delete nextFailedItems[item.id]
         this.failedItems = nextFailedItems
       }
-      warmupLevixelItem(item, event)
+      warmupLevixelItem(item, event).catch(() => {})
     },
     handleError(item) {
+      const nextPreparedPreviewSources = { ...this.preparedPreviewSources }
+      delete nextPreparedPreviewSources[item.id]
+      this.preparedPreviewSources = nextPreparedPreviewSources
+      const nextReadyItems = { ...this.readyItems }
+      delete nextReadyItems[item.id]
+      this.readyItems = nextReadyItems
       this.failedItems = { ...this.failedItems, [item.id]: true }
     },
     retry(item) {
       const nextFailedItems = { ...this.failedItems }
       delete nextFailedItems[item.id]
       this.failedItems = nextFailedItems
-      this.revisions = { ...this.revisions, [item.id]: Date.now() }
+      this.preparePreview(item)
     },
-    async openViewer(index) {
+    async openViewer(item, index) {
+      if (!this.readyItems[item.id])
+        return
       try {
         await openLevixelFromSelector({
           items: this.media,
@@ -139,7 +182,7 @@ export default {
   position: sticky;
   z-index: 5;
   top: 0;
-  padding-top: env(safe-area-inset-top);
+  padding-top: var(--status-bar-height);
   background: #17365f;
 }
 
@@ -196,17 +239,37 @@ export default {
 }
 
 .media-image,
-.retry-surface {
+.retry-surface,
+.preview-placeholder {
   width: 100%;
   height: 100%;
 }
 
-.retry-surface {
+.retry-surface,
+.preview-placeholder {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: #edf0f5;
+}
+
+.retry-surface {
+  flex-direction: column;
+}
+
+.preview-spinner {
+  width: 30rpx;
+  height: 30rpx;
+  border: 4rpx solid rgba(89, 101, 123, 0.25);
+  border-top-color: #59657b;
+  border-radius: 50%;
+  animation: preview-spin 0.8s linear infinite;
+}
+
+@keyframes preview-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .retry-icon {
