@@ -19,7 +19,7 @@
             "ignoreVersion" : false
         },
         "nativePlugins" : {
-            "SandroxUniPlugin-Levixel" : {
+            "Sandrox-Levixel" : {
                 "__plugin_info__" : {
                     "name" : "Levixel shared-transition viewer",
                     "description" : "Shared-transition image and video viewer bridge for UniApp on Android and iOS.",

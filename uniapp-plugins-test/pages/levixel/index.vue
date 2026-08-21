@@ -48,7 +48,7 @@ import {
   openLevixelFromSelector,
   prepareLevixelItem,
   warmupLevixelItem,
-} from '@/nativeplugins/SandroxUniPlugin-Levixel/js_sdk/index.js'
+} from '@/nativeplugins/Sandrox-Levixel/js_sdk/index.js'
 import { levixelMedia } from '@/data/levixelMedia.js'
 
 export default {
