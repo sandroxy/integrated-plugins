@@ -2,6 +2,13 @@ import UIKit
 import Levixel
 
 final class LevixelDemoViewController: UIViewController {
+    private struct ThumbnailRequest {
+        let url: URL
+        let imageView: UIImageView
+        var failureCount = 0
+        var isLoading = false
+    }
+
     private enum DemoAsset {
         case image(source: URL, thumbnail: URL)
         case video(source: URL, poster: URL)
@@ -27,7 +34,13 @@ final class LevixelDemoViewController: UIViewController {
 
     private let scrollView = UIScrollView()
     private let contentStack = UIStackView()
+    private let thumbnailImageLoader: LevixelImageLoading = LevixelImageLoaderFactory.makeDefault()
     private var galleryDatasource: LevixelDataSource?
+    private var thumbnailRequests: [ObjectIdentifier: ThumbnailRequest] = [:]
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +49,12 @@ final class LevixelDemoViewController: UIViewController {
         view.backgroundColor = .systemBackground
 
         setupLayout()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(retryPendingThumbnailLoads),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil
+        )
 
         let galleryAssets: [DemoAsset] = [
             .image(
@@ -214,11 +233,51 @@ final class LevixelDemoViewController: UIViewController {
     }
 
     private func loadImage(url: URL, into imageView: UIImageView) {
-        URLSession.shared.dataTask(with: url) { data, _, _ in
-            guard let data, let image = UIImage(data: data) else { return }
-            DispatchQueue.main.async {
-                imageView.image = image
+        let key = ObjectIdentifier(imageView)
+        thumbnailRequests[key] = ThumbnailRequest(url: url, imageView: imageView)
+        attemptThumbnailLoad(for: key)
+    }
+
+    private func attemptThumbnailLoad(for key: ObjectIdentifier) {
+        guard var request = thumbnailRequests[key], !request.isLoading else { return }
+        if request.imageView.image != nil {
+            thumbnailRequests.removeValue(forKey: key)
+            return
+        }
+
+        request.isLoading = true
+        thumbnailRequests[key] = request
+        thumbnailImageLoader.loadImage(
+            request.url,
+            placeholder: nil,
+            imageView: request.imageView
+        ) { [weak self] image in
+            guard let self, var current = self.thumbnailRequests[key] else { return }
+            current.isLoading = false
+
+            guard image == nil else {
+                self.thumbnailRequests.removeValue(forKey: key)
+                return
             }
-        }.resume()
+
+            current.failureCount += 1
+            self.thumbnailRequests[key] = current
+            self.scheduleThumbnailRetry(for: key, failureCount: current.failureCount)
+        }
+    }
+
+    private func scheduleThumbnailRetry(for key: ObjectIdentifier, failureCount: Int) {
+        let retryDelays: [TimeInterval] = [0.75, 1.5, 3, 6]
+        guard failureCount <= retryDelays.count else { return }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + retryDelays[failureCount - 1]) { [weak self] in
+            self?.attemptThumbnailLoad(for: key)
+        }
+    }
+
+    @objc private func retryPendingThumbnailLoads() {
+        for key in Array(thumbnailRequests.keys) {
+            attemptThumbnailLoad(for: key)
+        }
     }
 }
