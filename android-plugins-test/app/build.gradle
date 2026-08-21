@@ -2,7 +2,7 @@ plugins {
     id "com.android.application"
 }
 
-def levixelVersion = providers.gradleProperty("levixelVersion").getOrElse("1.0.0")
+def levixelVersion = providers.gradleProperty("levixelVersion").getOrElse("1.1.0")
 
 base {
     archivesName = "android-plugins-test"

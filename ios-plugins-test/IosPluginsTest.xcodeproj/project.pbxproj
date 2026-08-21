@@ -3,16 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B74B0D5E274751E31679D80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991AB407AE502DFD494682AE /* AppDelegate.swift */; };
 		A10000000000000000000002 /* LevixelDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001 /* LevixelDemoViewController.swift */; };
-		A10000000000000000000004 /* Levixel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003 /* Levixel.xcframework */; };
-		A10000000000000000000005 /* Levixel.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003 /* Levixel.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A10000000000000000000004 /* .artifacts/Levixel.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003 /* .artifacts/Levixel.xcframework */; };
+		A10000000000000000000005 /* .artifacts/Levixel.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003 /* .artifacts/Levixel.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A10000000000000000000008 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000007 /* SceneDelegate.swift */; };
 		A1000000000000000000000A /* PluginListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000009 /* PluginListViewController.swift */; };
-		3B74B0D5E274751E31679D80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 991AB407AE502DFD494682AE /* AppDelegate.swift */; };
 		F2ECE55D82E50317E1E0FF22 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE24A262C888D46B87434782 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -23,7 +23,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A10000000000000000000005 /* Levixel.xcframework in Embed Frameworks */,
+				A10000000000000000000005 /* .artifacts/Levixel.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -31,12 +31,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		991AB407AE502DFD494682AE /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A10000000000000000000001 /* LevixelDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevixelDemoViewController.swift; sourceTree = "<group>"; };
-		A10000000000000000000003 /* Levixel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = .artifacts/Levixel.xcframework; sourceTree = "<group>"; };
+		A10000000000000000000003 /* .artifacts/Levixel.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = .artifacts/Levixel.xcframework; sourceTree = "<group>"; };
 		A10000000000000000000007 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A10000000000000000000009 /* PluginListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PluginListViewController.swift; sourceTree = "<group>"; };
 		A1000000000000000000000B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		991AB407AE502DFD494682AE /* AppDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AAF73379A2AC092456566F7D /* IosPluginsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IosPluginsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE24A262C888D46B87434782 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -46,7 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10000000000000000000004 /* Levixel.xcframework in Frameworks */,
+				A10000000000000000000004 /* .artifacts/Levixel.xcframework in Frameworks */,
 				F2ECE55D82E50317E1E0FF22 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -74,7 +74,7 @@
 		35AC38F263A94F03D91EDCD4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A10000000000000000000003 /* Levixel.xcframework */,
+				A10000000000000000000003 /* .artifacts/Levixel.xcframework */,
 				2FD5D300CE39B51E4E789ACA /* iOS */,
 			);
 			name = Frameworks;
@@ -97,7 +97,6 @@
 				A10000000000000000000001 /* LevixelDemoViewController.swift */,
 				A1000000000000000000000B /* Info.plist */,
 			);
-			name = IosPluginsTest;
 			path = IosPluginsTest;
 			sourceTree = "<group>";
 		};
@@ -140,8 +139,6 @@
 				Base,
 			);
 			mainGroup = 33B4BE6CE20AF9F523881325;
-			minimizedProjectReferenceProxies = 0;
-			preferredProjectObjectVersion = 77;
 			productRefGroup = AEDEAC3209C49A8B1E4A17DD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -244,10 +241,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CQ5QU9G4F2;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = IosPluginsTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sandrox.integratedplugins.iostest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -264,10 +265,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CQ5QU9G4F2;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = IosPluginsTest/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sandrox.integratedplugins.iostest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
